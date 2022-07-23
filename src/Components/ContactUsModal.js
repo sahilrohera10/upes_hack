@@ -26,7 +26,7 @@ export default function ContactUsModal() {
   return (
     <div>
       <Button
-        style={{ marginTop: "10px", color: "white" }}
+        style={{ marginTop: "10px", color: "white", fontWeight: "700" }}
         onClick={handleOpen}
       >
         CONTACT US

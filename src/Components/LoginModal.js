@@ -29,7 +29,7 @@ export default function LoginModal() {
         style={{ background: "#10D0D6", color: "black" }}
         onClick={handleOpen}
       >
-        <p style={{ fontWidth: "600", marginTop: "0px", marginBottom: "0px" }}>
+        <p style={{ fontWeight: "600", marginTop: "0px", marginBottom: "0px" }}>
           {" "}
           Login{" "}
         </p>
