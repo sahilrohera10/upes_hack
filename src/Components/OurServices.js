@@ -29,30 +29,88 @@ export default function OurServices() {
             flexWrap: "wrap",
           }}
         >
-          <ServiceCard
-            name="Web Designing"
-            descrip="A well-designed website can help you create a good impression on your potential customers"
-          />
-          <ServiceCard
-            name="Web Development"
-            descrip="A well-designed and robust website serves as a bridge between your business objectives and your target."
-          />
-          <ServiceCard
-            name="APP Development"
-            descrip="Apps have truly transformed the way in which consumers handle their mobile devices, how they handle their business."
-          />
-          <ServiceCard
-            name="Logo Making"
-            descrip="A well-designed logo builds trust by communicating to your potential clients about who you are and what you do."
-          />
+          <div style={{ display: "flex" }} className="serviceCard">
+            <img
+              style={{ borderRadius: "10px 0px 0px 10px" }}
+              src="Web-Development.jpg"
+              alt=""
+            />
+
+            <p
+              style={{
+                fontSize: "22px",
+                fontWeight: "700",
+                textAlign: "center",
+                marginBottom: "0px",
+              }}
+            >
+              Web Develpment
+            </p>
+          </div>
+
+          <div style={{ display: "flex" }} className="serviceCard">
+            <img
+              style={{ borderRadius: "10px 0px 0px 10px", width: "155px" }}
+              src="web design.jpg"
+              alt=""
+            />
+
+            <p
+              style={{
+                fontSize: "22px",
+                fontWeight: "700",
+                textAlign: "center",
+                marginBottom: "0px",
+              }}
+            >
+              Web Designing
+            </p>
+          </div>
+
+          <div style={{ display: "flex" }} className="serviceCard">
+            <img
+              style={{ borderRadius: "10px 0px 0px 10px", width: "155px" }}
+              src="app dev.jpg"
+              alt=""
+            />
+
+            <p
+              style={{
+                fontSize: "22px",
+                fontWeight: "700",
+                textAlign: "center",
+                marginBottom: "0px",
+              }}
+            >
+              App Development
+            </p>
+          </div>
+
+          <div style={{ display: "flex" }} className="serviceCard">
+            <img
+              style={{ borderRadius: "10px 0px 0px 10px", width: "155px" }}
+              src="logo making.jpg"
+              alt=""
+            />
+
+            <p
+              style={{
+                fontSize: "22px",
+                fontWeight: "700",
+                textAlign: "center",
+                marginBottom: "0px",
+              }}
+            >
+              Logo Making
+            </p>
+          </div>
         </div>
+
         <img
           style={{ width: "550px", height: "400px" }}
           src="serviceImg.png"
           alt=""
         />
-
-        {/* <ServiceCard name="Web Designing" /> */}
       </div>
     </div>
   );

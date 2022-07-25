@@ -6,6 +6,7 @@ import LoginModal from "./LoginModal";
 import ProfileAvatar from "./ProfileAvatar";
 import { deepOrange } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
+import CartModal from "./CartModal";
 
 export default function NavBar() {
   const auth = localStorage.getItem("isAuthorised");
@@ -65,40 +66,47 @@ export default function NavBar() {
         {/* <p>CONTACT US</p> */}
       </div>
 
-      <div style={{ marginLeft: "210px", marginTop: "20px" }}>
+      <div style={{ marginLeft: "170px", marginTop: "20px" }}>
         {auth ? (
-          <div class="dropdown">
-            <button class="dropbtn">
-              {" "}
-              {/* <CgProfile size={25} style={{ marginTop: "-20px" }} /> */}
-              {/* <ProfileAvatar name={UserName} /> */}
-              <Avatar sx={{ bgcolor: deepOrange[500], marginTop: "-20px" }}>
-                {UserName}
-              </Avatar>
-            </button>
-            <div class="dropdown-content">
-              <a href="#">Account</a>
-              <a href="#">Applications</a>
-              <p
-                onClick={handleLogout}
+          <div style={{ display: "flex" }}>
+            <CartModal />
+            {/* <Tooltip title="Cart">
+              <img
                 style={{
-                  color: "black",
-                  marginLeft: "17px",
-                  marginTop: "10px",
+                  width: "60px",
+                  height: "60px",
+                  marginTop: "-10px",
                   cursor: "pointer",
                 }}
-              >
-                Logout
-              </p>
+                src="cartImage.png"
+                alt=""
+              />
+            </Tooltip> */}
+            <div class="dropdown">
+              <button class="dropbtn">
+                {" "}
+                <Avatar sx={{ bgcolor: deepOrange[500], marginTop: "-20px" }}>
+                  {UserName}
+                </Avatar>
+              </button>
+              <div class="dropdown-content">
+                <a href="#">Account</a>
+                <a href="#">Applications</a>
+                <p
+                  onClick={handleLogout}
+                  style={{
+                    color: "black",
+                    marginLeft: "17px",
+                    marginTop: "10px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Logout
+                </p>
+              </div>
             </div>
           </div>
         ) : (
-          // <Button
-          //   style={{ background: "#10D0D6", color: "black", fontWeight: "700" }}
-          //   variant="contained"
-          // >
-          //   Login
-          // </Button>
           <LoginModal />
         )}
       </div>
