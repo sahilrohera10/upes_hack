@@ -16,7 +16,7 @@ export default function AboutUs() {
 
       <div style={{ marginLeft: "70px", marginTop: "100px" }}>
         <h1 style={{ fontSize: "40px", textAlign: "center", color: "#001430" }}>
-          We offer optimal IT services <br /> are under one roof.
+          We offer optimal IT services <br /> under one roof.
         </h1>
         <div style={{ width: "700px", marginLeft: "50px" }}>
           <p>

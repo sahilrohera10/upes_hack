@@ -171,7 +171,7 @@ export default function LoginRegister() {
 
     try {
       const rep1 = await fetch(
-        "http://localhost:3333/Register",
+        "http://localhost:3322/Register",
         requestOptions
       );
       if (rep1.status === 300) {
@@ -222,7 +222,7 @@ export default function LoginRegister() {
     };
 
     try {
-      const rep1 = await fetch("http://localhost:3333/Login", requestOptions);
+      const rep1 = await fetch("http://localhost:3322/Login", requestOptions);
       rep1.json().then((data) => {
         console.log("data =>", data.pass);
 

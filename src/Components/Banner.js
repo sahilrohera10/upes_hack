@@ -39,20 +39,26 @@ export default function Banner() {
             style={{
               color: "white",
               fontSize: "60px",
-              fontWeight: "700",
-              marginTop: "170px",
-              marginLeft: "170px",
-              textAlign: "center",
+              fontWeight: "600",
+              marginTop: "110px",
+              marginLeft: "110px",
+              marginRight: "30px",
+              marginBottom: "2px",
+              // textAlign: "center",
             }}
           >
-            THIS IS THE TIME <br /> TO{" "}
+            This is the time to{" "}
             <span
               className="animateCharcter"
               //   style={{ color: "#0DF200" }}
             >
               GROW
             </span>{" "}
-            YOUR <br /> <span>BUSINESS</span>
+            your <span>business</span>
+          </p>
+          <p style={{ color: "white", marginLeft: "120px", fontSize: "35px" }}>
+            {" "}
+            We offer optimal IT services <br /> under one roof.🚀
           </p>
         </motion.div>
         <motion.div
@@ -64,7 +70,7 @@ export default function Banner() {
         >
           <img
             style={{
-              marginLeft: "80px",
+              marginLeft: "20px",
               marginTop: "50px",
               width: "650px",
               height: "500px",

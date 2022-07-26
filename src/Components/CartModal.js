@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useLayoutEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -26,7 +26,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 450,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -37,6 +37,56 @@ export default function CartModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [finalData, setFinalData] = useState();
+
+  const cId = localStorage.getItem("id");
+
+  useLayoutEffect(() => {
+    try {
+      fetch(`http://localhost:3322/GetServicefromCart/${cId}`)
+        .then((resp) => resp.json())
+        .then((resp) => {
+          console.log("data=>", resp);
+          setFinalData(resp.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  const handleRemove = async (data) => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      // body: JSON.stringify(body),
+    };
+
+    try {
+      const resp1 = await fetch(
+        `http://localhost:3322/DeleteServicefromCart/${cId}/${data.serviceId}`,
+        requestOptions
+      );
+
+      if (resp1.json("status")) {
+        fetch(`http://localhost:3322/GetServicefromCart/${cId}`)
+          .then((resp) => resp.json())
+          .then((resp) => {
+            console.log("data=>", resp);
+            setFinalData(resp.data);
+          });
+      } else {
+        alert("error");
+      }
+      // if (resp1.status === 300) {
+      //   alert("Service Already Added");
+      // }
+    } catch (error) {
+      console.log("Err ", error);
+
+      // handleClicked();
+    }
+  };
 
   return (
     <div>
@@ -64,44 +114,58 @@ export default function CartModal() {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Cart
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {data.map((data) => (
-              <div
-                style={{
-                  display: "flex",
-                  border: "1px solid black",
-                  width: "350px",
-                  height: "130px",
-                  boxShadow: "0px 5px 12px 4px lightGray",
-                  marginBottom: "20px",
-                }}
-              >
-                <img style={{ width: "142px" }} src={data.imageUrl} alt="" />
+          <Typography
+            id="modal-modal-description"
+            sx={{
+              mt: 2,
+              display: "flex",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            {finalData &&
+              finalData.map((data) => (
                 <div
                   style={{
-                    width: "150px",
-                    marginTop: "8px",
-                    marginLeft: "25px",
+                    display: "flex",
+                    border: "1px solid black",
+                    width: "200px",
+                    height: "130px",
+                    boxShadow: "0px 5px 12px 4px lightGray",
+                    marginBottom: "20px",
+                    margin: "10px",
                   }}
                 >
-                  <h2 style={{ textAlign: "center" }}> {data.name} </h2>
-                </div>
-                <Tooltip title="Remove From Cart">
-                  <ImCross
+                  {/* <img style={{ width: "142px" }} src={data.imageUrl} alt="" /> */}
+                  <div
                     style={{
-                      marginLeft: "18px",
-                      marginTop: "5px",
-                      cursor: "pointer",
+                      width: "150px",
+                      marginTop: "8px",
+                      marginLeft: "25px",
                     }}
-                  />
-                </Tooltip>
-              </div>
-            ))}
-            {console.log("data lenght=>", data.length)}
-            {data.length} Services in Cart
+                  >
+                    <h2 style={{ textAlign: "center" }}> {data.name} </h2>
+                  </div>
+                  <Tooltip title="Remove From Cart">
+                    <ImCross
+                      style={{
+                        marginLeft: "0px",
+                        marginTop: "5px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => handleRemove(data)}
+                    />
+                  </Tooltip>
+                </div>
+              ))}
+            {/* {console.log("data lenght=>", finalData.length)} */}
+            {/* {finalData.length} Services in Cart */}
           </Typography>
 
-          <Button style={{ marginLeft: "250px" }} variant="contained">
+          <Button
+            style={{ marginLeft: "380px", marginTop: "10px" }}
+            variant="text"
+          >
             Continue
           </Button>
         </Box>

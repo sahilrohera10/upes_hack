@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useLayoutEffect } from "react";
 import Button from "@mui/material/Button";
 import { CgProfile } from "react-icons/cg";
 import ContactUsModal from "./ContactUsModal";
@@ -20,6 +20,21 @@ export default function NavBar() {
     localStorage.clear();
     window.location.reload();
   };
+
+  const [finalData, setFinalData] = useState();
+
+  useLayoutEffect(() => {
+    try {
+      fetch("http://localhost:3322/GetService")
+        .then((resp) => resp.json())
+        .then((resp) => {
+          console.log("data=>", resp);
+          setFinalData(resp.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
     <div
@@ -47,41 +62,33 @@ export default function NavBar() {
           paddingTop: "10px",
         }}
       >
-        <p style={{ cursor: "pointer", fontWeight: "700" }}>HOME</p>
-        <p style={{ cursor: "pointer", fontWeight: "700" }}>ABOUT US</p>
-        {/* <p>OUR SERVICES</p> */}
+        <p style={{ cursor: "pointer", fontWeight: "700", marginTop: "20px" }}>
+          HOME
+        </p>
+        <p style={{ cursor: "pointer", fontWeight: "700", marginTop: "20px" }}>
+          ABOUT US
+        </p>
         <div class="dropdown">
           <button class="dropbtn">OUR SERVICES</button>
           <div class="dropdown-content">
-            <a href="#">Web Designing</a>
-            <a href="#">Web Development</a>
+            {finalData &&
+              finalData.map((data) => <a href="#"> {data.name} </a>)}
+            {/* <a href="#">Web Development</a>
             <a href="#">Logo Making And Creative Designs</a>
             <a href="#">Mobile App Development</a>
             <a href="#">Digital Marketing</a>
             <a href="#">Business Incorporation</a>
-            <a href="#">StartUp Consulting And Nurturing</a>
+            <a href="#">StartUp Consulting And Nurturing</a> */}
           </div>
         </div>
         <ContactUsModal />
-        {/* <p>CONTACT US</p> */}
       </div>
 
       <div style={{ marginLeft: "170px", marginTop: "20px" }}>
         {auth ? (
           <div style={{ display: "flex" }}>
             <CartModal />
-            {/* <Tooltip title="Cart">
-              <img
-                style={{
-                  width: "60px",
-                  height: "60px",
-                  marginTop: "-10px",
-                  cursor: "pointer",
-                }}
-                src="cartImage.png"
-                alt=""
-              />
-            </Tooltip> */}
+
             <div class="dropdown">
               <button class="dropbtn">
                 {" "}
