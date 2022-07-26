@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const PORT = process.env.PORT || 4001;
 
 const cors = require("cors");
+const bodyparser = require("body-parser");
 
 dotenv.config();
 
@@ -14,7 +15,9 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(express.json());
+app.use(bodyparser.json());
 app.use(cors());
+
 
 app.use(express.urlencoded({ extended: false }));
 

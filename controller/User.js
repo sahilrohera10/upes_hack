@@ -17,8 +17,8 @@ sendMAil,
 Register,
 sendmailforcontact,
 Login,
-ApplicationForm,
-PdfGenerate
+// ApplicationForm,
+// PdfGenerate
 };
 
 async function Register(req, res, next) {
@@ -197,47 +197,47 @@ async function Register(req, res, next) {
   }
 
 
-  async function ApplicationForm(req, res, next) {
-    try {
-      const data = await form.create({
-       name:req.body.name,
-       customerId:req.body.customerId,
-       email:req.body.Email,
-       contactNo:req.body.contactNo,
-       services:req.body.services,
-      });
-  console.log("data->",data.services);
-      return res.status(200).json({ data });
-    } catch (error) {
-      console.log("error=>", error);
-      return next(error);
-    }
-  }
+//   async function ApplicationForm(req, res, next) {
+//     try {
+//       const data = await form.create({
+//        name:req.body.name,
+//        customerId:req.body.customerId,
+//        email:req.body.Email,
+//        contactNo:req.body.contactNo,
+//        services:req.body.services,
+//       });
+//   console.log("data->",data.services);
+//       return res.status(200).json({ data });
+//     } catch (error) {
+//       console.log("error=>", error);
+//       return next(error);
+//     }
+//   }
 
-  async function PdfGenerate(req, res, next) {
+//   async function PdfGenerate(req, res, next) {
 
-    try{
-// Pipe its output somewhere, like to a file or HTTP response
-// See below for browser usage
-doc.pipe(fs.createWriteStream(req.body.name));
+//     try{
+// // Pipe its output somewhere, like to a file or HTTP response
+// // See below for browser usage
+// doc.pipe(fs.createWriteStream(req.body.name));
 
-// Embed a font, set the font size, and render some text
-doc
-  // .font('fonts/PalatinoBold.ttf')
-  .fontSize(25)
+// // Embed a font, set the font size, and render some text
+// doc
+//   // .font('fonts/PalatinoBold.ttf')
+//   .fontSize(25)
 
-  // .text("email=",req.body.email, 100, 100)
-  .text(req.body.number, 100, 100);
-
-
+//   // .text("email=",req.body.email, 100, 100)
+//   .text(req.body.number, 100, 100);
 
 
-// Finalize PDF file
-doc.end();
-      return res.status(200).json();
 
-    }catch(error){
-      console.log("error=>", error);
-      return next(error);
-    }
-  }
+
+// // Finalize PDF file
+// doc.end();
+//       return res.status(200).json();
+
+//     }catch(error){
+//       console.log("error=>", error);
+//       return next(error);
+//     }
+//   }

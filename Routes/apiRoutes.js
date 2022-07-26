@@ -2,6 +2,7 @@ const router = require("express").Router();
 const user = require("../controller/User");
 const service = require("../controller/service");
 const cart = require("../controller/cart");
+const invoice = require("../controller/Invoice");
 
 
 
@@ -9,8 +10,16 @@ router.post("/sendmail", user.sendMAil);
 router.post("/Register", user.Register);
 router.post("/Login", user.Login);
 router.post("/SendMailforContact", user.sendmailforcontact);
-router.post("/FillApplicationForm", user.ApplicationForm);
-router.post("/GeneratePdf", user.PdfGenerate);
+// router.post("/FillApplicationForm", user.ApplicationForm);
+// router.post("/GeneratePdf", user.PdfGenerate);
+
+
+
+router.post("/FillApplicationForm", invoice.ApplicationForm);
+router.post("/DownloadInvoice", invoice.DownloadInvoice);
+// router.post("/GeneratePdf", user.PdfGenerate);
+
+
 
 
 
