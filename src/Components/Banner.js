@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Button } from "@mui/material";
+import { BsArrowRight } from "react-icons/bs";
 
 export default function Banner() {
   const animations = {
@@ -60,6 +62,18 @@ export default function Banner() {
             {" "}
             We offer optimal IT services <br /> under one roof.🚀
           </p>
+          <Button
+            variant="contained"
+            style={{
+              marginLeft: "120px",
+              background: "#10D0D6",
+              color: "black",
+              fontWeight: "550",
+            }}
+          >
+            {" "}
+            Learn More <BsArrowRight />
+          </Button>
         </motion.div>
         <motion.div
           variants={animations}
@@ -72,6 +86,7 @@ export default function Banner() {
             style={{
               marginLeft: "20px",
               marginTop: "50px",
+              marginRight: "25px",
               width: "650px",
               height: "500px",
             }}

@@ -4,6 +4,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { Link } from "react-router-dom";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -203,18 +204,20 @@ export default function OurServices() {
               </div>
             ))}
         </div>
-        <Button
-          style={{
-            marginLeft: "670px",
-            marginTop: "20px",
-            background: "#10D0D6",
-            color: "black",
-          }}
-          variant="contained"
-        >
-          {" "}
-          View All Services{" "}
-        </Button>
+        <Link to="/services" style={{ textDecoration: "none" }}>
+          <Button
+            style={{
+              marginLeft: "670px",
+              marginTop: "20px",
+              background: "#10D0D6",
+              color: "black",
+            }}
+            variant="contained"
+          >
+            {" "}
+            View All Services{" "}
+          </Button>
+        </Link>
       </div>
     </div>
   );

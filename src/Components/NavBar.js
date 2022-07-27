@@ -7,6 +7,7 @@ import ProfileAvatar from "./ProfileAvatar";
 import { deepOrange } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 import CartModal from "./CartModal";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const auth = localStorage.getItem("isAuthorised");
@@ -46,6 +47,7 @@ export default function NavBar() {
         display: "flex",
         color: "white",
         paddingTop: "15px",
+        zIndex: "200",
       }}
     >
       <img
@@ -62,15 +64,19 @@ export default function NavBar() {
           paddingTop: "10px",
         }}
       >
-        <p style={{ cursor: "pointer", fontWeight: "700", marginTop: "20px" }}>
-          HOME
-        </p>
-        <p style={{ cursor: "pointer", fontWeight: "700", marginTop: "20px" }}>
+        <Link to="/home" style={{ textDecoration: "none", color: "white" }}>
+          <p
+            style={{ cursor: "pointer", fontWeight: "700", marginTop: "16px" }}
+          >
+            HOME
+          </p>
+        </Link>
+        <p style={{ cursor: "pointer", fontWeight: "700", marginTop: "16px" }}>
           ABOUT US
         </p>
-        <div class="dropdown">
-          <button class="dropbtn">OUR SERVICES</button>
-          <div class="dropdown-content">
+        <div className="dropdown">
+          <button className="dropbtn">OUR SERVICES</button>
+          <div className="dropdown-content">
             {finalData &&
               finalData.map((data) => <a href="#"> {data.name} </a>)}
             {/* <a href="#">Web Development</a>
@@ -89,14 +95,14 @@ export default function NavBar() {
           <div style={{ display: "flex" }}>
             <CartModal />
 
-            <div class="dropdown">
-              <button class="dropbtn">
+            <div className="dropdown">
+              <button className="dropbtn">
                 {" "}
                 <Avatar sx={{ bgcolor: deepOrange[500], marginTop: "-20px" }}>
                   {UserName}
                 </Avatar>
               </button>
-              <div class="dropdown-content">
+              <div className="dropdown-content">
                 <a href="#">Account</a>
                 <a href="#">Applications</a>
                 <p
