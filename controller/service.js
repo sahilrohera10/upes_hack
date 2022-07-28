@@ -1,10 +1,9 @@
-
 const mongoose = require("mongoose");
 
 const ObjectId = mongoose.Types.ObjectId;
 const path = require("path");
 
-const  service = require("../models/service");
+const service = require("../models/service");
 // const { User } = require("../models");
 const express = require("express");
 const nodemailer = require("nodemailer");
@@ -13,14 +12,26 @@ const bcrypt = require("bcrypt");
 const { ObjectID } = require("bson");
 const multer = require("multer");
 
-module.exports={
-AddService,
-DeleteService,
-GetService,
-UpdateService
+module.exports = {
+  GetSomeService,
+  AddService,
+  DeleteService,
+  GetService,
+  UpdateService,
 };
 
+async function GetSomeService(req, res, next) {
+  // const id = ObjectId(req.params.productId);
+  const n = req.params.services;
 
+  try {
+    const data = await service.find().limit(n);
+    return res.status(200).json({ data });
+  } catch (error) {
+    console.log("error=>", error);
+    return next(error);
+  }
+}
 
 async function AddService(req, res, next) {
   try {
@@ -34,7 +45,7 @@ async function AddService(req, res, next) {
       },
     });
 
-    const maxSize = 1 * 2000 * 2000;
+    const maxSize = 5 * 2000 * 2000;
 
     var upload = multer({
       storage: storage,
@@ -72,10 +83,9 @@ async function AddService(req, res, next) {
         // productsData.update({ imageId: req.file.filename }, { where: { id: 2 } });
         const data = await service.create({
           imageId: req.file.filename,
-          name:req.body.Name,
-          description:req.body.description
-         });
-     
+          name: req.body.Name,
+          description: req.body.description,
+        });
 
         console.log("data uploaded :", data);
         return res.status(200).json("Services Added successfully");
@@ -89,17 +99,13 @@ async function AddService(req, res, next) {
   }
 }
 
-
-
-
-
 // async function AddService(req, res, next) {
 //     try {
 //       const data = await service.create({
 //        name:req.body.Name,
 //        description:req.body.description
 //       });
-  
+
 //       return res.status(200).json({ data });
 //     } catch (error) {
 //       console.log("error=>", error);
@@ -107,50 +113,51 @@ async function AddService(req, res, next) {
 //     }
 //   }
 
-  async function DeleteService(req, res, next) {
+async function DeleteService(req, res, next) {
   const id = req.params.serviceId;
-console.log("id->",id);
+  console.log("id->", id);
 
-
-    try {
-     await service.deleteOne({
-        _id:id,
-      });
-  console.log("service deleted ")
-      return res.status(200).json("service is deleted");
-    } catch (error) {
-      console.log("error=>", error);
-      return next(error);
-    }
+  try {
+    await service.deleteOne({
+      _id: id,
+    });
+    console.log("service deleted ");
+    return res.status(200).json("service is deleted");
+  } catch (error) {
+    console.log("error=>", error);
+    return next(error);
   }
+}
 
-  async function GetService(req, res, next) {
-    // const id = ObjectId(req.params.productId);
-  
-      try {
-       const data= await service.find();
-        console.log("data->",data);
-    
-        return res.status(200).json({data});
-      } catch (error) {
-        console.log("error=>", error);
-        return next(error);
-      }
-    }
+async function GetService(req, res, next) {
+  // const id = ObjectId(req.params.productId);
 
-    async function UpdateService(req, res, next) {
-      // const id = ObjectId(req.params.productId);
-    
-        try {
-         await service.findOneAndUpdate({
-            _id:req.body.ServiceId},{name:req.body.name,description:req.body.description}
-          );
-       
-      console.log("service Updated ")
-          return res.status(200).json("service is updated");
-        } catch (error) {
-          console.log("error=>", error);
-          return next(error);
-        }
-      }
-    
+  try {
+    const data = await service.find();
+    console.log("data->", data);
+
+    return res.status(200).json({ status: true, data });
+  } catch (error) {
+    console.log("error=>", error);
+    return next(error);
+  }
+}
+
+async function UpdateService(req, res, next) {
+  // const id = ObjectId(req.params.productId);
+
+  try {
+    await service.findOneAndUpdate(
+      {
+        _id: req.body.ServiceId,
+      },
+      { name: req.body.name, description: req.body.description }
+    );
+
+    console.log("service Updated ");
+    return res.status(200).json("service is updated");
+  } catch (error) {
+    console.log("error=>", error);
+    return next(error);
+  }
+}
