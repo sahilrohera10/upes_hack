@@ -23,6 +23,7 @@ async function AddServicetoCart(req, res, next) {
         name: req.body.name,
         customerId: req.body.customerId,
         serviceId: req.body.serviceId,
+        imageId: req.body.imageId,
       });
 
       return res.status(200).json({ success: true, data });

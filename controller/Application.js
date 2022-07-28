@@ -12,9 +12,12 @@ const path = require("path");
 module.exports = {
   // InsertBillData ,
   // GetBillHistory ,
-  DownloadInvoice,
-  DownloadingTheBill,
+  DownloadApplication,
+  DownloadingApplication,
   ApplicationForm,
+  GetApplicationForm,
+  GetApplicationFormbyCustomerId,
+  DeleteApplicationForm,
 };
 
 async function ApplicationForm(req, res, next) {
@@ -25,6 +28,7 @@ async function ApplicationForm(req, res, next) {
       email: req.body.Email,
       contactNo: req.body.contactNo,
       services: req.body.services,
+      status: req.body.status,
     });
     console.log("data->", data.services);
     return res.status(200).json({ status: true, data });
@@ -33,13 +37,45 @@ async function ApplicationForm(req, res, next) {
     return next(error);
   }
 }
-// async function GetBillHistory(req , res , next){
-//     const data = await invoiceData.findAll({order : [['id' , 'DESC']]});
 
-//     res.status(200).json({data});
-// }
+async function GetApplicationForm(req, res, next) {
+  try {
+    const data = await form.find().sort({ date: -1 });
+    console.log("data->", data);
+    return res.status(200).json({ data });
+  } catch (error) {
+    console.log("error=>", error);
+    return next(error);
+  }
+}
 
-async function DownloadInvoice(req, res, next) {
+async function DeleteApplicationForm(req, res, next) {
+  const id = req.body.id;
+  try {
+    await form.deleteOne({
+      _id: id,
+    });
+    // console.log("data->",data.services);
+    return res.status(200).json({ status: true });
+  } catch (error) {
+    console.log("error=>", error);
+    return next(error);
+  }
+}
+
+async function GetApplicationFormbyCustomerId(req, res, next) {
+  try {
+    const ids = req.params.customerId;
+    const data = await form.find({ customerId: ids }).sort({ date: -1 });
+    console.log("data->", data);
+    return res.status(200).json({ data });
+  } catch (error) {
+    console.log("error=>", error);
+    return next(error);
+  }
+}
+
+async function DownloadApplication(req, res, next) {
   // const services = req.body.services
   console.log("tart");
   function createInvoice() {
@@ -51,7 +87,7 @@ async function DownloadInvoice(req, res, next) {
     generateFooter(doc);
 
     doc.end();
-    doc.pipe(fs.createWriteStream("Form.pdf"));
+    doc.pipe(fs.createWriteStream("Application.pdf"));
   }
 
   function generateHeader(doc) {
@@ -96,7 +132,7 @@ async function DownloadInvoice(req, res, next) {
   }
 
   function generateTableRow(doc) {
-    const services = req.body.services;
+    // const services = req.body.services;
     console.log("entered 2");
     doc.fontSize(10).text("Services:", 50, 280);
 
@@ -151,7 +187,7 @@ async function DownloadInvoice(req, res, next) {
   // }
 
   createInvoice();
-  const filePath = "./Form.pdf";
+  const filePath = "./Application.pdf";
   fs.access(filePath, fs.constants.F_OK, (err) => {
     if (err) console.log("file not exist");
     else console.log("exist");
@@ -160,8 +196,8 @@ async function DownloadInvoice(req, res, next) {
   //   return res.status(200).json({message : 'pdf generated'});
 }
 
-async function DownloadingTheBill(req, res, next) {
+async function DownloadingApplication(req, res, next) {
   console.log("in dwnld");
-  const file = "./Form.pdf";
+  const file = "./Application.pdf";
   res.download(file);
 }
