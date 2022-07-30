@@ -6,6 +6,7 @@ const formSchema = new mongoose.Schema({
   email: String,
   contactNo: Number,
   services: [String],
+  status: String,
   date: {
     type: Date,
     default: Date.now,

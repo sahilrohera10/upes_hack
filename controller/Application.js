@@ -15,9 +15,10 @@ module.exports = {
   DownloadApplication,
   DownloadingApplication,
   ApplicationForm,
-  GetApplicationForm,
+  GetPendingApplicationForm,
   GetApplicationFormbyCustomerId,
   DeleteApplicationForm,
+  GetInProcessApplicationForm,
 };
 
 async function ApplicationForm(req, res, next) {
@@ -29,7 +30,47 @@ async function ApplicationForm(req, res, next) {
       contactNo: req.body.contactNo,
       services: req.body.services,
       status: req.body.status,
+      payment: "pending",
     });
+
+    const tranporter = nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      auth: {
+        user: "contact.technomaits@gmail.com",
+        pass: "qhtpgbivqupkszzf",
+      },
+    });
+
+    // var arr = req.body.services;
+
+    const mailOptions = {
+      from: req.body.Email,
+      to: "contact.technomaits@gmail.com",
+      subject: `${req.body.name} submits an application from ${req.body.Email}`,
+      // text: `These are some services they required ${req.body.services}`,
+
+      html: `<p style = "font-weight: bold">Customer requested some services <br>
+      <br>
+       For further Process ,Go to your Admin Panel.
+       </p>
+     `,
+    };
+    console.log("There");
+    // console.log(text);
+
+    tranporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.send("error");
+      } else {
+        console.log("send");
+        res.send("success");
+      }
+    });
+
+    // console.log("in progress...");
+
     console.log("data->", data.services);
     return res.status(200).json({ status: true, data });
   } catch (error) {
@@ -38,9 +79,22 @@ async function ApplicationForm(req, res, next) {
   }
 }
 
-async function GetApplicationForm(req, res, next) {
+async function GetPendingApplicationForm(req, res, next) {
   try {
-    const data = await form.find().sort({ date: -1 });
+    const data = await form.find({ status: "pending" }).sort({ date: -1 });
+    console.log("data->", data);
+    return res.status(200).json({ data });
+  } catch (error) {
+    console.log("error=>", error);
+    return next(error);
+  }
+}
+
+async function GetInProcessApplicationForm(req, res, next) {
+  try {
+    const data = await form
+      .find({ status: { $ne: "pending" } })
+      .sort({ date: -1 });
     console.log("data->", data);
     return res.status(200).json({ data });
   } catch (error) {
@@ -134,7 +188,7 @@ async function DownloadApplication(req, res, next) {
   function generateTableRow(doc) {
     // const services = req.body.services;
     console.log("entered 2");
-    doc.fontSize(10).text("Services:", 50, 280);
+    doc.fontSize(10).text("Services:", 50, 290);
 
     // for (var j = 0; j < services.length; j++){
 
@@ -143,15 +197,20 @@ async function DownloadApplication(req, res, next) {
     //     }
     var arr = req.body.services;
 
-    var margin = 300;
+    var margin = 310;
     var serialNo = 1;
     for (var i = 0; i < arr.length; i++) {
       doc.text(serialNo++, 50, margin);
+      //  doc.text(".")
       doc.text(arr[i], 100, margin);
       margin = margin + 20;
       //   serialNo=serialNo+5;
     }
 
+    doc
+      .fontSize(10)
+      .text(`Application Status:  ${req.body.status}`, 50, 245)
+      .text(`Payment : Rs. ${req.body.payment} /-`, 50, 260);
     // .text('DISCRIPTION' , 150 , 280)
     // .text( req.body.services, 150, 310)
 
