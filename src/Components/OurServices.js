@@ -65,6 +65,7 @@ export default function OurServices() {
       name: data.name,
       customerId: cId,
       serviceId: data._id,
+      imageId: data.imageId,
     };
 
     console.log(body);
@@ -101,7 +102,7 @@ export default function OurServices() {
 
   useLayoutEffect(() => {
     try {
-      fetch("http://localhost:3322/GetService")
+      fetch("http://localhost:3322/GetSomeService/3")
         .then((resp) => resp.json())
         .then((resp) => {
           console.log("data=>", resp);

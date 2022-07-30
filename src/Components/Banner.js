@@ -20,6 +20,7 @@ export default function Banner() {
       style={{
         paddingTop: "100px",
         background: "#001430",
+        // backgroundImage: "linear-gradient(#001430, #78fff6)",
         width: "100%",
         height: "645px",
       }}
@@ -56,7 +57,7 @@ export default function Banner() {
             >
               GROW
             </span>{" "}
-            your <span>business</span>
+            your <span> business</span>
           </p>
           <p style={{ color: "white", marginLeft: "120px", fontSize: "35px" }}>
             {" "}

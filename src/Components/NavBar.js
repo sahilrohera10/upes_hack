@@ -6,8 +6,8 @@ import LoginModal from "./LoginModal";
 import ProfileAvatar from "./ProfileAvatar";
 import { deepOrange } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
-import CartModal from "./CartModal";
 import { Link } from "react-router-dom";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function NavBar() {
   const auth = localStorage.getItem("isAuthorised");
@@ -93,7 +93,21 @@ export default function NavBar() {
       <div style={{ marginLeft: "170px", marginTop: "20px" }}>
         {auth ? (
           <div style={{ display: "flex" }}>
-            <CartModal />
+            {/* <CartModal /> */}
+            <Link to="/cartPage">
+              <Tooltip title="Cart">
+                <img
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    marginTop: "-10px",
+                    cursor: "pointer",
+                  }}
+                  src="cartImage.png"
+                  alt=""
+                />
+              </Tooltip>
+            </Link>
 
             <div className="dropdown">
               <button className="dropbtn">
@@ -104,7 +118,7 @@ export default function NavBar() {
               </button>
               <div className="dropdown-content">
                 <a href="#">Account</a>
-                <a href="#">Applications</a>
+                <Link to="myApplications">Applications</Link>
                 <p
                   onClick={handleLogout}
                   style={{
