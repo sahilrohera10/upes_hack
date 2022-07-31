@@ -1,0 +1,27 @@
+body{
+  background-color: #E9EDF8;
+}
+
+
+.sidebarContent{
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 0px;
+  margin-left: 15px;
+  margin-bottom: 0px;
+}
+
+.sidebarDiv{
+  display: flex;
+  margin-left: 15px;
+  margin-top: 30px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 20px;
+  width: 270px;
+}
+
+.sidebarDiv:hover{
+  /* background-color: #7e7d7; */
+  color: white;
+}
