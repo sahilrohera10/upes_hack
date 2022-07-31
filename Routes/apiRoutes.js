@@ -11,12 +11,14 @@ router.post("/Register", user.Register);
 router.post("/Login", user.Login);
 router.post("/SendMailforContact", user.sendmailforcontact);
 router.post("/SendMailtoCustomer", user.sendmailtoCustomer);
+router.put("/UpdateProfile", user.UpdateProfile);
 
 //APPLICATION APIS
 router.post("/FillApplicationForm", application.ApplicationForm);
 router.post("/DownloadApplication", application.DownloadApplication);
 router.get("/DownloadingApplication", application.DownloadingApplication);
 router.get("/GetPendingApplicationForm", application.GetPendingApplicationForm);
+router.get("/GetPendingApplicationbyNum/:applications", application.GetPendingApplicationsbynumber);
 router.get(
   "/GetInProcessApplicationForm",
   application.GetInProcessApplicationForm
