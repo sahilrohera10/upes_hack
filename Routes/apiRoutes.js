@@ -24,6 +24,7 @@ router.get(
   application.GetInProcessApplicationForm
 );
 router.delete("/DeleteApplicationForm", application.DeleteApplicationForm);
+router.put("/ApplicationStatusUpdate", application.ApplicationStatusUpdate);
 
 router.get(
   "/GetAllApplicationFormbyId/:customerId",
