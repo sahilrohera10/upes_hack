@@ -7,15 +7,14 @@ import Button from "@mui/material/Button";
 
 export default function AllMyApplications() {
   const cId = localStorage.getItem("id");
-  const [price, setPrice] = useState();
 
-  const initiatePayment = async () => {
+  const initiatePayment = async (amt) => {
     // let mod = cookieCutter.get("modules");
     // mod = JSON.parse(mod);
     // let subjectId = cookieCutter.get("subjectId");
     // let TxnToken;
     // let customerId = cId ;
-    let amount = 100;
+    let amount = amt;
     let oid = Math.floor(Math.random() * Date.now());
     // get transaction token
     const data = { amount, orderId: oid, cId };
@@ -178,10 +177,16 @@ export default function AllMyApplications() {
                   fontWeight: "500",
                 }}
               >
-                Selected Services
+                Selected Services 👇
               </p>
               {data.services.map((services) => (
-                <p style={{ fontWeight: "500", marginTop: "20px" }}>
+                <p
+                  style={{
+                    fontWeight: "500",
+                    marginTop: "20px",
+                    marginLeft: "30px",
+                  }}
+                >
                   {services}
                 </p>
               ))}
@@ -196,13 +201,107 @@ export default function AllMyApplications() {
                   Application Status :{" "}
                   <span style={{ fontWeight: "600" }}> {data.status}</span>
                 </p>
-                <Button
-                  style={{ marginTop: "8px" }}
-                  onClick={() => initiatePayment()}
-                >
-                  {" "}
-                  Make Payment{" "}
-                </Button>
+                {data.Payment && (
+                  <Button
+                    // variant="contained"
+                    style={{
+                      marginTop: "8px",
+                      marginLeft: "20px",
+                      padding: "5px",
+                    }}
+                    onClick={() => initiatePayment(data.Payment)}
+                  >
+                    {" "}
+                    Make Payment{" "}
+                  </Button>
+                )}
+
+                {data.status === "pending" ? (
+                  ""
+                ) : data.status === "lets connect some other time" ? (
+                  ""
+                ) : data.DoneStatus === "pending" ? (
+                  <img
+                    style={{
+                      position: "absolute",
+                      width: "130px",
+                      height: "110px",
+                      top: "20%",
+                      left: "70%",
+                    }}
+                    src="pending.jpg"
+                    alt=""
+                  />
+                ) : (
+                  <img
+                    style={{
+                      position: "absolute",
+                      width: "130px",
+                      height: "110px",
+                      top: "20%",
+                      left: "70%",
+                    }}
+                    src="complete.jpg"
+                    alt=""
+                  />
+                )}
+
+                {/* { if (data.status === "pending") {""} else if (
+                data.status === "lets connect some other time") {""}
+                else
+                data.DoneStatus === "pending" ? (
+                  <img
+                    style={{
+                      position: "absolute",
+                      width: "130px",
+                      height: "110px",
+                      top: "20%",
+                      left: "70%",
+                    }}
+                    src="pending.jpg"
+                    alt=""
+                  />
+                ) : (
+                  <img
+                    style={{
+                      position: "absolute",
+                      width: "130px",
+                      height: "110px",
+                      top: "20%",
+                      left: "70%",
+                    }}
+                    src="complete.jpg"
+                    alt=""
+                  />
+                ) } */}
+                {/* {data.status === "pending" ||
+                data.status === "lets connect some other time" ? (
+                  ""
+                ) : data.DoneStatus === "pending" ? (
+                  <img
+                    style={{
+                      position: "absolute",
+                      width: "130px",
+                      height: "110px",
+                      top: "20%",
+                      left: "70%",
+                    }}
+                    src="pending.jpg"
+                    alt=""
+                  />
+                ) : (
+                  <img
+                    style={{
+                      position: "absolute",
+                      width: "130px",
+                      height: "110px",
+                      top: "20%",
+                      left: "70%",
+                    }}
+                    src="complete.jpg"
+                    alt=""
+                  />
+                )} */}
               </div>
               <Tooltip title="Download Your Application">
                 <AiOutlineCloudDownload

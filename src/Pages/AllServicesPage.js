@@ -47,6 +47,7 @@ export default function AllServicesPage() {
       name: data.name,
       customerId: cId,
       serviceId: data._id,
+      imageId: data.imageId,
     };
 
     console.log(body);
@@ -97,7 +98,8 @@ export default function AllServicesPage() {
       style={{
         paddingTop: "160px",
         display: "flex",
-        justifyContent: "space-evenly",
+        justifyContent: "center",
+        flexWrap: "wrap",
       }}
     >
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -120,11 +122,12 @@ export default function AllServicesPage() {
               display: "flex",
               position: "relative",
               zIndex: "0",
+              margin: "20px",
             }}
           >
             <img
               style={{ width: "230px", zIndex: "-10" }}
-              src={data.imageId}
+              src={`http://localhost:3322/uploads/${data.imageId}`}
               alt=""
             />
             <div style={{ marginRight: "10px" }}>

@@ -60,6 +60,7 @@ export default function ApplicationPage() {
       contactNo: parseInt(phone),
       services: servicesArray,
       status: "pending",
+      DoneStatus: "pending",
     };
     console.log("after body");
     console.log(body);

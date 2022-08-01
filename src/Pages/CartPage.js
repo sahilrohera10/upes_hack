@@ -103,7 +103,11 @@ export default function CartPage() {
                     background: "white",
                   }}
                 >
-                  <img style={{ width: "142px" }} src={data.imageId} alt="" />
+                  <img
+                    style={{ width: "142px" }}
+                    src={`http://localhost:3322/uploads/${data.imageId}`}
+                    alt=""
+                  />
                   <div
                     style={{
                       width: "150px",
@@ -165,42 +169,8 @@ export default function CartPage() {
     );
   } else {
     return (
-      <div
-        style={{
-          paddingTop: "120px",
-          background: "#001430",
-          height: "650px",
-          display: "flex",
-        }}
-      >
-        <div
-          style={{
-            width: "600px",
-            height: "600px",
-            borderRadius: "10px",
-            border: "5px solid white",
-            marginLeft: "20px",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <h2 style={{ color: "white", marginTop: "100px" }}>
-              Your Cart Is Empty
-            </h2>
-          </div>
-        </div>
-
-        <div style={{ color: "white", marginLeft: "100px", width: "650px" }}>
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: "30px",
-              marginTop: "0px",
-              fontWeight: "550",
-            }}
-          >
-            Services Cart
-          </p>
-        </div>
+      <div style={{ paddingTop: "300px", textAlign: "center" }}>
+        <h1 style={{ marginTop: "0px" }}>Your Cart is Empty</h1>
       </div>
     );
   }

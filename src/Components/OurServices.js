@@ -172,7 +172,7 @@ export default function OurServices() {
                     width: "350px",
                     height: "280px",
                   }}
-                  src={data.imageId}
+                  src={`http://localhost:3322/uploads/${data.imageId}`}
                   alt=""
                 />
 
