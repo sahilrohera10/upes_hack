@@ -12,6 +12,7 @@ export default function SideBar() {
         height: "745px",
         background: "#25233B",
         color: "#a6a6a6",
+        position: "fixed",
       }}
     >
       <img
