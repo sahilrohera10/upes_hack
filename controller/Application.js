@@ -22,29 +22,27 @@ module.exports = {
   DeleteApplicationForm,
   GetInProcessApplicationForm,
   GetPendingApplicationsbynumber,
-  ApplicationStatusUpdate
+  ApplicationStatusUpdate,
 };
 
-async function ApplicationStatusUpdate(req,res,next){
-  const id=req.body.id;
-  
-try{
+async function ApplicationStatusUpdate(req, res, next) {
+  const id = req.body.id;
 
-const data = await form.updateOne({
-  _id:id
- },{DoneStatus:req.body.ProjectStatus,Payment:req.body.payment});
+  try {
+    const data = await form.updateOne(
+      {
+        _id: id,
+      },
+      { DoneStatus: req.body.ProjectStatus, Payment: req.body.payment }
+    );
 
- console.log("HI");
- console.log(data);
- return res.status(200).json({ status: true, data });
-
-
-}catch(error){
-  console.log("error=>", error);
+    console.log("HI");
+    console.log(data);
+    return res.status(200).json({ status: true });
+  } catch (error) {
+    console.log("error=>", error);
     return next(error);
-}
-
-
+  }
 }
 
 async function ApplicationForm(req, res, next) {
@@ -57,9 +55,9 @@ async function ApplicationForm(req, res, next) {
       services: req.body.services,
       status: req.body.status,
       payment: "pending",
-      url:req.body.url,
-      DoneStatus:req.body.DoneStatus,
-      Payment:req.body.payment
+      url: req.body.url,
+      DoneStatus: req.body.DoneStatus,
+      Payment: req.body.payment,
     });
 
     const tranporter = nodemailer.createTransport({
@@ -123,10 +121,14 @@ async function GetPendingApplicationsbynumber(req, res, next) {
   const n = req.params.applications;
 
   try {
-    
-    const data = await form.find({ status: "pending" }).limit(n).sort({ date: -1 }).select('name').select('email').select('url');
-    console.log("data->",data);
-   
+    const data = await form
+      .find({ status: "pending" })
+      .limit(n)
+      .sort({ date: -1 })
+      .select("name")
+      .select("email")
+      .select("url");
+    console.log("data->", data);
 
     return res.status(200).json({ data });
   } catch (error) {
