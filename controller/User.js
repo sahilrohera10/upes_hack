@@ -20,7 +20,7 @@ module.exports = {
   sendmailforcontact,
   Login,
   sendmailtoCustomer,
-  UpdateProfile
+  UpdateProfile,
 
   // ApplicationForm,
   // PdfGenerate
@@ -238,14 +238,12 @@ async function sendmailforcontact(req, res, next) {
   }
 }
 
-
-
 async function UpdateProfile(req, res, next) {
   try {
     var storage = multer.diskStorage({
       destination: function (req, file, cb) {
         // Uploads is the Upload_folder_name
-        cb(null, "ProfileImg");
+        cb(null, "ImgUploads");
       },
       filename: function (req, file, cb) {
         cb(null, file.fieldname + "-" + Date.now() + ".jpg");
@@ -292,8 +290,12 @@ async function UpdateProfile(req, res, next) {
           {
             _id: req.body.customerId,
           },
-          
-         { url: req.file.filename,name:req.body.name,contactNo:req.body.contactNo}
+
+          {
+            url: req.file.filename,
+            name: req.body.name,
+            contactNo: req.body.contactNo,
+          }
         );
 
         console.log("data uploaded :", data);
@@ -307,7 +309,6 @@ async function UpdateProfile(req, res, next) {
     return next(error);
   }
 }
-
 
 //   async function ApplicationForm(req, res, next) {
 //     try {
