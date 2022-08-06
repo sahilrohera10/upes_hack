@@ -32,12 +32,16 @@ export default function ReviewedApplicationPage() {
 
   const [amount, setAmount] = useState();
 
-  const handleProjectDone = async (data) => {
+  const handleProjectDone = async (data, n) => {
     const body = {
       id: data._id,
       ProjectStatus: "Done",
       payment: parseInt(amount),
+      numOfService: n,
+      Email: data.email,
     };
+
+    console.log("body=>", body);
 
     const requestOptions = {
       method: "PUT",
@@ -132,46 +136,68 @@ export default function ReviewedApplicationPage() {
                     Contact : {data.contactNo}{" "}
                   </p>
                 </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    left: "70%",
-                    top: "35%",
-                    // display: "flex",
-                  }}
-                >
+                {data.DoneStatus !== "Done" ? (
                   <div
                     style={{
-                      display: "flex",
+                      position: "absolute",
+                      left: "70%",
+                      top: "35%",
+                      // display: "flex",
                     }}
                   >
-                    <p> Project Done</p>
-                    <Checkbox
-                      checked={checked}
-                      onChange={handleChange}
-                      inputProps={{ "aria-label": "controlled" }}
+                    <div
+                      style={{
+                        display: "flex",
+                      }}
+                    >
+                      <p> Project Done</p>
+                      <Checkbox
+                        checked={checked}
+                        onChange={handleChange}
+                        inputProps={{ "aria-label": "controlled" }}
+                      />
+                    </div>
+                    {checked && (
+                      <>
+                        <TextField
+                          id="outlined-basic"
+                          label="Amount"
+                          value={amount}
+                          onChange={(e) => setAmount(e.target.value)}
+                          variant="outlined"
+                        />{" "}
+                        <br />
+                        <Button
+                          variant="contained"
+                          onClick={() =>
+                            handleProjectDone(
+                              data,
+                              data.services.length === 1
+                                ? 0
+                                : data.services.length
+                            )
+                          }
+                          style={{ marginLeft: "70px", marginTop: "10px" }}
+                        >
+                          Submit
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  <div>
+                    {/* <p>Project Done Successfully</p> */}
+                    <img
+                      style={{
+                        marginLeft: "600px",
+                        width: "180px",
+                        height: "150px",
+                      }}
+                      src="complete.jpg"
+                      alt=""
                     />
                   </div>
-                  {checked && (
-                    <>
-                      <TextField
-                        id="outlined-basic"
-                        label="Amount"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        variant="outlined"
-                      />{" "}
-                      <br />
-                      <Button
-                        variant="contained"
-                        onClick={() => handleProjectDone(data)}
-                        style={{ marginLeft: "70px", marginTop: "10px" }}
-                      >
-                        Submit
-                      </Button>
-                    </>
-                  )}
-                </div>
+                )}
               </AccordionDetails>
             </Accordion>
           ))}

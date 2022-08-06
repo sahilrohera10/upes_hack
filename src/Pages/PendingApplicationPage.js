@@ -60,12 +60,27 @@ export default function PendingApplicationPage() {
     }
   };
 
+  const handleRefresh = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3322/GetPendingApplicationForm")
+      .then((resp) => resp.json())
+      .then((resp) => {
+        console.log("data=>", resp);
+        setFinalData(resp.data);
+      });
+  };
+
   return (
     <div>
       <p style={{ fontSize: "30px", fontWeight: "500", marginLeft: "20px" }}>
         Pending Requests
       </p>
-
+      <button
+        style={{ color: "black", marginLeft: "1150px" }}
+        onClick={(e) => handleRefresh(e)}
+      >
+        Refresh
+      </button>
       {/* <ApplicationsAccordion data={finalData} /> */}
       <div style={{ marginTop: "70px" }}>
         {finalData &&
