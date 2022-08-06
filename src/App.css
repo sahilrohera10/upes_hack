@@ -1,4 +1,7 @@
 
+body{
+  background-color: #E9EDF8;
+}
 .animateCharcter{
   text-transform: uppercase;
  background-image: linear-gradient(
@@ -100,4 +103,9 @@
   /* background-color: #3e8e41; */
 }
 
+
+.banner{
+  width: 95%;
+  margin-left: 40px;
+}
 

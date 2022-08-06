@@ -134,7 +134,7 @@ export default function LoginRegister() {
 
     try {
       const rep1 = await fetch(
-        "http://localhost:3333/sendmail",
+        "http://localhost:3322/sendmail",
         requestOptions
       );
       if (rep1.ok) {

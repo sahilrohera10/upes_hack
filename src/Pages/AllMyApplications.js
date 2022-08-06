@@ -4,26 +4,16 @@ import { MdOutlineDelete } from "react-icons/md";
 import Chip from "@mui/material/Chip";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
+import CheckCodeModal from "../Components/CheckCodeModal";
 
 export default function AllMyApplications() {
   const cId = localStorage.getItem("id");
 
   const initiatePayment = async (amt) => {
-    // let mod = cookieCutter.get("modules");
-    // mod = JSON.parse(mod);
-    // let subjectId = cookieCutter.get("subjectId");
-    // let TxnToken;
-    // let customerId = cId ;
     let amount = amt;
     let oid = Math.floor(Math.random() * Date.now());
-    // get transaction token
     const data = { amount, orderId: oid, cId };
-    // let [err, response] = await request("POST", "/pretransaction", { data });
-    // let [err, response] = await request(
-    //   "POST",
-    //   "/user-curriculum/purchase-initiate",
-    //   data
-    // );
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -147,8 +137,24 @@ export default function AllMyApplications() {
     }
   };
 
+  const handleRefresh = (e) => {
+    e.preventDefault();
+    fetch(`http://localhost:3322/GetAllApplicationFormbyId/${cId}`)
+      .then((resp) => resp.json())
+      .then((resp) => {
+        console.log("data=>", resp);
+        setFinalData(resp.data);
+      });
+  };
+
   return (
     <div style={{ paddingTop: "150px" }}>
+      <button
+        style={{ color: "black", marginLeft: "1350px" }}
+        onClick={(e) => handleRefresh(e)}
+      >
+        Refresh
+      </button>
       <h1 style={{ textAlign: "center" }}>Your Applications</h1>
       <div
         style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
@@ -160,10 +166,13 @@ export default function AllMyApplications() {
                 width: "950px",
                 minHeight: "200px",
                 maxHeight: "auto",
-                border: "2px solid black",
+                // border: "2px solid black",
+                boxShadow: "2px 2px 10px 2px lightGray",
                 borderRadius: "10px",
                 margin: "20px",
                 position: "relative",
+                background: "white",
+                paddingBottom: "20px",
               }}
             >
               <Chip
@@ -202,18 +211,21 @@ export default function AllMyApplications() {
                   <span style={{ fontWeight: "600" }}> {data.status}</span>
                 </p>
                 {data.Payment && (
-                  <Button
-                    // variant="contained"
-                    style={{
-                      marginTop: "8px",
-                      marginLeft: "20px",
-                      padding: "5px",
-                    }}
-                    onClick={() => initiatePayment(data.Payment)}
-                  >
-                    {" "}
-                    Make Payment{" "}
-                  </Button>
+                  <div style={{ display: "flex" }}>
+                    <Button
+                      variant="contained"
+                      style={{
+                        marginTop: "8px",
+                        marginLeft: "20px",
+                        padding: "5px",
+                      }}
+                      onClick={() => initiatePayment(data.Payment)}
+                    >
+                      {" "}
+                      Make Payment{" "}
+                    </Button>
+                    <CheckCodeModal data={data} />
+                  </div>
                 )}
 
                 {data.status === "pending" ? (

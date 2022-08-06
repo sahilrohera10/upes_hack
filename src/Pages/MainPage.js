@@ -12,6 +12,16 @@ export default function MainPage() {
       <Banner />
       <AboutUs />
       <OurServices />
+      <br />
+      <br />
+      <h1 style={{ textAlign: "center", fontSize: "50px" }}>Rewards Section</h1>
+      <div style={{ marginLeft: "230px", marginTop: "50px" }}>
+        <img
+          style={{ width: "85%", height: "450px", borderRadius: "50px" }}
+          src="rewards.jpeg"
+          alt=""
+        />
+      </div>
       {/* <Footer /> */}
     </div>
   );

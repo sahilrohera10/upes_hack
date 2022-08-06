@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ImCross } from "react-icons/im";
 import Tooltip from "@mui/material/Tooltip";
@@ -15,7 +15,7 @@ export default function CartPage() {
 
   const cId = localStorage.getItem("id");
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     try {
       fetch(`http://localhost:3322/GetServicefromCart/${cId}`)
         .then((resp) => resp.json())
@@ -76,7 +76,7 @@ export default function CartPage() {
             width: "750px",
             height: "600px",
             borderRadius: "10px",
-            border: "5px solid white",
+            // border: "5px solid white",
             marginLeft: "20px",
           }}
         >
@@ -146,7 +146,12 @@ export default function CartPage() {
                 })
               // handleClose()
             }
-            style={{ marginLeft: "290px", marginTop: "250px", width: "200px" }}
+            style={{
+              marginLeft: "280px",
+              marginTop: "170px",
+              width: "200px",
+              // maxMarginTop: "auto",
+            }}
             variant="contained"
           >
             Continue
