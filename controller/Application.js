@@ -23,18 +23,115 @@ module.exports = {
   GetInProcessApplicationForm,
   GetPendingApplicationsbynumber,
   ApplicationStatusUpdate,
+  AddCoupon,
 };
+
+async function AddCoupon(req, res, next) {
+  let amount = req.body.amount;
+  console.log("amount here=>", amount);
+  const Id = req.body.id;
+  const data = await form.findOne({ _id: Id });
+  const CouponCode = req.body.CouponCode;
+  const length = Math.ceil(Math.log10(CouponCode + 1));
+  try {
+    let num;
+    if (data.CouponCode == CouponCode) {
+      console.log("in");
+      if (length === 4) {
+        num = (5 * amount) / 100;
+        amount = amount - num;
+      } else if (length === 5) {
+        num = (10 * amount) / 100;
+        amount = amount - num;
+        console.log("num", num);
+      } else if (length === 6) {
+        num = (15 * amount) / 100;
+        amount = amount - num;
+      }
+
+      console.log("amount=>", amount);
+      await form.updateOne(
+        {
+          _id: Id,
+        },
+        { Payment: amount }
+      );
+      console.log("amount after discount:", amount);
+      return res.status(200).json({ "Total Amount:": amount });
+    } else {
+      console.log("Invalid Code");
+      return res.status(401).json("Invalid Code");
+    }
+  } catch (error) {
+    console.log("error=>", error);
+    return next(error);
+  }
+}
 
 async function ApplicationStatusUpdate(req, res, next) {
   const id = req.body.id;
+  const NumofServices = req.body.numOfService;
+
+  let val;
+
+  if (NumofServices == 2) {
+    val = Math.floor(1000 + Math.random() * 9000);
+  } else if (NumofServices == 3) {
+    val = Math.floor(10000 + Math.random() * 9000);
+  } else if (NumofServices > 3) {
+    val = Math.floor(100000 + Math.random() * 9000);
+  }
 
   try {
     const data = await form.updateOne(
       {
         _id: id,
       },
-      { DoneStatus: req.body.ProjectStatus, Payment: req.body.payment }
+      {
+        DoneStatus: req.body.ProjectStatus,
+        Payment: req.body.payment,
+        CouponCode: val,
+      }
     );
+    const tranporter = nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      auth: {
+        user: "contact.technomaits@gmail.com",
+        pass: "qhtpgbivqupkszzf",
+      },
+    });
+    let mailOptions;
+
+    if (req.body.numOfService) {
+      mailOptions = {
+        from: "contact.technomaits@gmail.com",
+        to: req.body.Email,
+        subject: `Respone From Admin Regarding Your Project`,
+        text: `Your Project is Completed.Your Bill Amount is ${req.body.payment}.
+   and your coupon code is ${val} `,
+      };
+    } else {
+      mailOptions = {
+        from: "contact.technomaits@gmail.com",
+        to: req.body.Email,
+        subject: `Respone From Admin Regarding Your Project`,
+        text: `Your Project is Completed.Your Bill Amount is ${req.body.payment}.
+    `,
+      };
+    }
+
+    // console.log(text);
+
+    tranporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.send("error");
+      } else {
+        console.log("send");
+        res.send("success");
+      }
+    });
 
     console.log("HI");
     console.log(data);
@@ -44,7 +141,6 @@ async function ApplicationStatusUpdate(req, res, next) {
     return next(error);
   }
 }
-
 async function ApplicationForm(req, res, next) {
   try {
     const data = await form.create({

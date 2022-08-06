@@ -14,11 +14,15 @@ router.post("/SendMailtoCustomer", user.sendmailtoCustomer);
 router.put("/UpdateProfile", user.UpdateProfile);
 
 //APPLICATION APIS
+router.put("/checkCode", application.AddCoupon);
 router.post("/FillApplicationForm", application.ApplicationForm);
 router.post("/DownloadApplication", application.DownloadApplication);
 router.get("/DownloadingApplication", application.DownloadingApplication);
 router.get("/GetPendingApplicationForm", application.GetPendingApplicationForm);
-router.get("/GetPendingApplicationbyNum/:applications", application.GetPendingApplicationsbynumber);
+router.get(
+  "/GetPendingApplicationbyNum/:applications",
+  application.GetPendingApplicationsbynumber
+);
 router.get(
   "/GetInProcessApplicationForm",
   application.GetInProcessApplicationForm

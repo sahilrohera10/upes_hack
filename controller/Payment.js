@@ -26,7 +26,6 @@ async function initiatePayment(req, res, next) {
       custId: customerId,
     },
   };
-
   try {
     const checksum = await PaytmChecksum.generateSignature(
       JSON.stringify(paytmParams.body),

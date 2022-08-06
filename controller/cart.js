@@ -1,4 +1,6 @@
 const cart = require("../models/cart");
+const serviceModel = require("../models/service");
+const baseRepo = require("./Repositories/baseRepository");
 
 const express = require("express");
 
@@ -37,6 +39,33 @@ async function AddServicetoCart(req, res, next) {
 async function GetServicefromCart(req, res, next) {
   try {
     const data = await cart.find({ customerId: req.params.customerId });
+    // console.log("data=>", data);
+    // console.log("service id =>", data.serviceId);
+    // const serviceData = await serviceModel.find({ _id: data.serviceId });
+    // console.log("services => ", serviceData);
+
+    // data = {
+    //   data,
+    //   serviceData,
+    // };
+    // console.log()
+    //  const query = [
+    //       {
+    //         '$lookup':
+    //         {
+    //           from: 'serviceModel',
+    //           localField: serviceId,
+    //           foreignField: '_id',
+    //           as: cart
+    //         }
+    //       } , {
+    //         $project : {
+    //           _id : 0,
+    //           imageId : 1,
+    //           name : 1
+    //         }
+    //       }
+    //     ]
 
     return res.status(200).json({ success: true, data });
   } catch (error) {

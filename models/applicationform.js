@@ -11,9 +11,10 @@ const formSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  url:String,
-  DoneStatus:String,
-  Payment:Number
+  url: String,
+  DoneStatus: String,
+  Payment: Number,
+  CouponCode: Number,
 });
 
 module.exports = mongoose.model("forms", formSchema);
