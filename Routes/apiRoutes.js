@@ -41,7 +41,7 @@ router.delete(
   "/DeleteServicefromCart/:customerId/:serviceId",
   cart.DeleteServicefromCart
 );
-router.get("/GetServicefromCart/:customerId", cart.GetServicefromCart);
+router.get("/GetCart/:customerId", cart.GetServicefromCart);
 
 //SERVICES APIS
 router.post("/AddService", service.AddService);

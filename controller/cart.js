@@ -1,8 +1,10 @@
 const cart = require("../models/cart");
 const serviceModel = require("../models/service");
 const baseRepo = require("./Repositories/baseRepository");
+const mongoose = require("mongoose");
 
 const express = require("express");
+const { baseAggregate } = require("./Repositories/baseRepository");
 
 module.exports = {
   AddServicetoCart,
@@ -22,10 +24,10 @@ async function AddServicetoCart(req, res, next) {
       return res.status(300).json("Service already added");
     } else {
       const data = await cart.create({
-        name: req.body.name,
+        // name: req.body.name,
         customerId: req.body.customerId,
         serviceId: req.body.serviceId,
-        imageId: req.body.imageId,
+        // imageId: req.body.imageId,
       });
 
       return res.status(200).json({ success: true, data });
@@ -37,37 +39,45 @@ async function AddServicetoCart(req, res, next) {
 }
 
 async function GetServicefromCart(req, res, next) {
+  const params = new mongoose.Types.ObjectId(req.params.customerId);
+
+  if (!params)
+    return res
+      .status(400)
+      .json({ message: "customerId is required in params" });
   try {
-    const data = await cart.find({ customerId: req.params.customerId });
-    // console.log("data=>", data);
-    // console.log("service id =>", data.serviceId);
-    // const serviceData = await serviceModel.find({ _id: data.serviceId });
-    // console.log("services => ", serviceData);
+    let query = [
+      {
+        $match: {
+          customerId: params,
+        },
+      },
 
-    // data = {
-    //   data,
-    //   serviceData,
-    // };
-    // console.log()
-    //  const query = [
-    //       {
-    //         '$lookup':
-    //         {
-    //           from: 'serviceModel',
-    //           localField: serviceId,
-    //           foreignField: '_id',
-    //           as: cart
-    //         }
-    //       } , {
-    //         $project : {
-    //           _id : 0,
-    //           imageId : 1,
-    //           name : 1
-    //         }
-    //       }
-    //     ]
+      {
+        $lookup: {
+          from: "services",
+          localField: "serviceId",
+          foreignField: "_id",
+          as: "service",
+        },
+      },
 
-    return res.status(200).json({ success: true, data });
+      {
+        $unwind: { path: "$service", preserveNullAndEmptyArrays: false },
+      },
+
+      {
+        $project: {
+          _id: 1,
+          serviceName: "$service.name",
+          serviceImageUrl: "$service.imageId",
+          serviceDescription: "$service.description",
+        },
+      },
+    ];
+
+    let data = await baseAggregate(cart, query);
+    return res.status(200).json({ data });
   } catch (error) {
     console.log("error=>", error);
     return next(error);
