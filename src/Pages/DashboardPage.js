@@ -5,33 +5,39 @@ import { RiDashboardFill } from "react-icons/ri";
 import { TbNotes } from "react-icons/tb";
 
 import Footer from "../Components/Footer";
+import Graphs from "../Components/Graphs";
 // import NavBar from "../Components/NavBar";
 
 const listData = [
   {
-    name: "Sahil Rohera",
-    email: "sahilrohera10@gmail.com",
-    img: "rohera.jpeg",
+    name: "Ravi Vohra",
+    email: "ravivihra90@gmail.com",
+    img: "https://static.toiimg.com/thumb/resizemode-4,msid-76729750,imgsize-249247,width-720/76729750.jpg",
+    // img: "rohera.jpeg",
   },
   {
-    name: "Yash Singhal",
-    email: "yash003singhal@gmail.com",
-    img: "singhal.jpeg",
+    name: "Pankaj Rawat",
+    email: "astonish@gmail.com",
+    img: "https://dt2sdf0db8zob.cloudfront.net/wp-content/uploads/2019/12/9-Best-Online-Avatars-and-How-to-Make-Your-Own-for-Free-image1-5.png",
+    // img: "singhal.jpeg",
   },
   {
-    name: "Sahil Arora",
-    email: "sahilaroraji2002@gmail.com",
-    img: "arora.jpeg",
+    name: "Jayant",
+    email: "jayant2002@gmail.com",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHCZuslFbn42wwA9qw6ywBERhtpr_yOFy3Cw&usqp=CAU",
+    // img: "arora.jpeg",
   },
   {
-    name: "Bhawna Jain",
-    email: "bhawnajain012002@gmail.com",
-    img: "bhawna.jpeg",
+    name: "Ansh",
+    email: "ansh2002@gmail.com",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJoBkWxNNHvLpW4knNYlRPtXfn9pRdijE0ow&usqp=CAU",
+    // img: "bhawna.jpeg",
   },
   {
-    name: "Yash Raj Hans",
-    email: "yashhans479@gmail.com",
-    img: "yrh.jpeg",
+    name: "Priyanka Bhatt",
+    email: "payal479@gmail.com",
+    img: "https://images.news18.com/ibnkhabar/uploads/2020/07/facebook-avatar-1.jpg?im=Resize,width=904,aspect=fit,type=normal",
+    // img: "yrh.jpeg",
   },
 ];
 
@@ -215,6 +221,7 @@ export default function DashboardPage() {
               </p>
             </div>
           </div>
+          {/* <Graphs /> */}
         </div>
         <div
           style={{
